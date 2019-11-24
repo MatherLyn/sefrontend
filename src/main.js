@@ -11,12 +11,17 @@ import 'element-ui/lib/theme-chalk/index.css'
 // 引入 axios
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+// 引入echarts
+import echarts from 'echarts'
+
 
 // 使用element
 Vue.use(ElementUI)
 // 使用axios
 Vue.use(VueAxios, axios)
 axios.defaults.baseURL='http://localhost:8081'
+// 挂载echarts
+Vue.prototype.$echarts = echarts
 
 Vue.config.productionTip = false
 

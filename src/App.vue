@@ -71,7 +71,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 2;
+    z-index: 3;
   }
   
   .top-bar {
@@ -158,5 +158,9 @@
 
   .submit-btn {
     width: 100%;
+  }
+
+  .el-tabs__content {
+    display: flex;
   }
 </style>
