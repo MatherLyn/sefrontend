@@ -1,5 +1,5 @@
 <template>
-  <div class="chart-body" id="salesTrendChart"></div>
+  <div class="chart-body" id="visitTrendChart"></div>
 </template>
 
 <script>
@@ -14,10 +14,10 @@
     },
     methods: {
       initChart () {
-        const chart = this.$echarts.init(document.querySelector('#salesTrendChart'))
+        const chart = this.$echarts.init(document.querySelector('#visitTrendChart'))
         chart.setOption({
           title: {
-            text: '销售趋势',
+            text: '访问量趋势',
             textStyle: {
               fontFamily: 'Microsoft YaHei',
               fontSize: '20px',

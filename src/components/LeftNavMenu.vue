@@ -15,35 +15,35 @@
         text-color="#fff"
       >
         <el-menu-item
-          :class="{'activated': active === 1}"
+          :class="{'activated': this.$store.state.active === 1}"
           @click="handleClick(1)"
         >
           <i class="el-icon-monitor"></i>
           <span slot="title">首页</span>
         </el-menu-item>
         <el-menu-item
-          :class="{'activated': active === 2}"
+          :class="{'activated': this.$store.state.active === 2}"
           @click="handleClick(2)"
         >
           <i class="el-icon-data-line"></i>
           <span slot="title">客户数据</span>
         </el-menu-item>
         <el-menu-item
-          :class="{'activated': active === 3}"
+          :class="{'activated': this.$store.state.active === 3}"
           @click="handleClick(3)"
         >
           <i class="el-icon-goods"></i>
           <span slot="title">产品列表</span>
         </el-menu-item>
         <el-menu-item
-          :class="{'activated': active === 4}"
+          :class="{'activated': this.$store.state.active === 4}"
           @click="handleClick(4)"
         >
           <i class="el-icon-coin"></i>
           <span slot="title">订单管理</span>
         </el-menu-item>
         <el-menu-item
-          :class="{'activated': active === 5}"
+          :class="{'activated': this.$store.state.active === 5}"
           @click="handleClick(5)"
         >
           <i class="el-icon-setting"></i>
@@ -59,13 +59,12 @@ import Router from "vue-router";
 export default {
   data() {
     return {
-      active: 1
     }
   },
   methods: {
     handleClick (index) {
-      this.active = index
-      console.log(this.active)
+      if (this.$store.state.offline) return
+      this.$store.state.active = index
       switch (index) {
         case 1: {
           this.$router.push({name: 'Home'})

@@ -62,6 +62,7 @@
             this.$store.state.offline = false
             this.$store.state.name = this.userInfo.name
             this.$router.push({name: 'Home', params: {name: this.userInfo.name}})
+            this.$store.state.active = 1
           }, 500);
         })
       },

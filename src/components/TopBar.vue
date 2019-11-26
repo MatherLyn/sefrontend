@@ -32,6 +32,7 @@
           alert('您已注销成功')
           this.$store.state.offline = true
           this.$store.state.name = '请登录'
+          this.$store.state.active = 0
           this.$router.push({name: 'Login'})
         } else {
           // 保持

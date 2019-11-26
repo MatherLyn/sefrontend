@@ -21,7 +21,7 @@
         label="型号">
       </el-table-column>
       <el-table-column
-        prop="quantity"
+        prop="stock"
         label="库存">
       </el-table-column>
       <el-table-column
@@ -29,8 +29,8 @@
         prop="manipulation"
         label="操作">
         <template slot-scope="scope">
-          <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-          <el-button type="text" size="small">编辑</el-button>
+          <el-button @click="checkItem(scope.row)" type="text" size="small">查看</el-button>
+          <el-button @click="modifyItem(scope.row)" type="text" size="small">编辑</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -41,105 +41,64 @@
   export default {
     data () {
       return {
-        tableData: [
-          {
-            id: '001',
-            type: 'screw',
-            model: 'screw-1',
-            quantity: '100'
-          },
-          {
-            id: '002',
-            type: 'screw',
-            model: 'screw-2',
-            quantity: '200'
-          },
-          {
-            id: '003',
-            type: 'screw',
-            model: 'screw-3',
-            quantity: '455'
-          },
-          {
-            id: '004',
-            type: 'screw',
-            model: 'screw-4',
-            quantity: '322'
-          },
-          {
-            id: '005',
-            type: 'screw',
-            model: 'screw-5',
-            quantity: '800'
-          },
-          {
-            id: '006',
-            type: 'nut',
-            model: 'nut-1',
-            quantity: '200'
-          },
-          {
-            id: '007',
-            type: 'nut',
-            model: 'nut-2',
-            quantity: '544'
-          },
-          {
-            id: '008',
-            type: 'nut',
-            model: 'nut-3',
-            quantity: '899'
-          },
-          {
-            id: '009',
-            type: 'nut',
-            model: 'nut-4',
-            quantity: '655'
-          },
-          {
-            id: '010',
-            type: 'gear',
-            model: 'gear-1',
-            quantity: '447'
-          },
-          {
-            id: '011',
-            type: 'gear',
-            model: 'gear-2',
-            quantity: '800'
-          },
-          {
-            id: '012',
-            type: 'gear',
-            model: 'gear-3',
-            quantity: '122'
-          },
-          {
-            id: '013',
-            type: 'gear',
-            model: 'gear-4',
-            quantity: '644'
-          },
-          {
-            id: '014',
-            type: 'gear',
-            model: 'gear-5',
-            quantity: '676'
-          },
-          {
-            id: '015',
-            type: 'gear',
-            model: 'gear-6',
-            quantity: '455'
-          },
-        ]
+        tableData: [],
+        popup: false,
+        showId: '',
+        showType: '',
+        showModel: '',
+        showStock: '',
+        showMsg: '',
+        workPiece: {
+          id: '',
+          type: '',
+          model: '',
+          stock: '',
+        }
       }
     },
     methods: {
       filterType (value, row, column) {
         const property = column['property']
         return row[property] === value
+      },
+      checkItem (row) {
+        const id = parseInt(row.id)
+        this.axios.get(`/api/workpiece/check?id=${id}`)
+        .then(response => {
+          const responseData = response.data
+          if (!responseData.code) {
+            this.showMsg = responseData.status
+            return
+          }
+          this.showMsg = ''
+          this.showId = responseData.id
+          this.showType = responseData.type
+          this.showModel = responseData.model
+          this.showStock = responseData.stock
+          this.popup = true
+        })
+      },
+      modifyItem (row) {
+        this.workPiece.id = parseInt(row.id)
+        this.workPiece.type = row.type
+        this.workPiece.model = row.model
+        this.workPiece.stock = parseInt(row.stock)
+        console.log(this.workPiece)
+        this.axios.post('/api/workpiece/append', this.workPiece)
+        .then(response => {
+          console.log(response)
+        })
       }
+    },
+    mounted () {
+      this.axios.get('/api/workpiece/list')
+      .then(response => {
+        if (!response.data.code) {
+          alert(response.data.staus)
+          return
+        }
+        this.tableData = response.data.data
+      })
     }
   }
 </script>

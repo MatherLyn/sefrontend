@@ -44,6 +44,10 @@
     color: #000;
   }
 
+  ul {
+    list-style-type: none;
+  }
+
   label {
     width: 100%;
     display: block;
