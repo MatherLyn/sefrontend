@@ -14,6 +14,9 @@
     components: {
       TopBar,
       LeftNavMenu
+    },
+    mounted () {
+
     }
   }
 </script>
@@ -75,7 +78,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 3;
+    z-index: 5;
   }
   
   .top-bar {
@@ -87,7 +90,13 @@
     padding: 1rem 0;
     background: #fff;
     box-shadow: 0 2px 2px rgba(0, 0, 0, .1);
-    z-index: 1;
+    z-index: 4;
+    opacity: .8;
+    transition: .2s;
+  }
+
+  .top-bar:hover {
+    opacity: 1;
   }
 
   .main-view {
@@ -166,5 +175,14 @@
 
   .el-tabs__content {
     display: flex;
+  }
+
+  .el-pagination {
+    text-align: right;
+    padding-top: 2rem;
+  }
+
+  .el-table__body-wrapper {
+    border-bottom: none !important;
   }
 </style>

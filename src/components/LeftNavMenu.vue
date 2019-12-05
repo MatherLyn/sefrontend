@@ -71,7 +71,7 @@ export default {
           break
         }
         case 2: {
-          this.$router.push({name: 'ClientStat'})
+          this.$router.push({name: 'UserList'})
           break
         }
         case 3: {

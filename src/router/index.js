@@ -5,7 +5,7 @@ import Login from '@/components/Login'
 import Register from '@/components/Register'
 import ModifyPwd from '@/components/ModifyPwd'
 import Home from '@/components/Home'
-import ClientStat from '@/components/ClientStat'
+import UserList from '@/components/UserList'
 import ProductList from '@/components/ProductList'
 import OrderManagement from '@/components/OrderManagement'
 import Settings from '@/components/Settings'
@@ -51,12 +51,12 @@ const router = new Router({
       component: Home
     },
     {
-      path: '/clientStat',
-      name: 'ClientStat',
+      path: '/userList',
+      name: 'UserList',
       meta: {
         requireAuth: true
       },
-      component: ClientStat
+      component: UserList
     },
     {
       path: '/productList',
