@@ -23,7 +23,6 @@
       addNewItem () {
         this.$emit('getPopupState')
         document.body.style.overflow = 'hidden'
-        console.log('activated')
       }
     }
   }

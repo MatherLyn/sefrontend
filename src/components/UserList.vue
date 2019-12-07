@@ -46,7 +46,7 @@
         :total="tableData.length"
       ></el-pagination>
     </div>
-    <ListPopup v-show="showPopup" @popupClose="closePopup" />
+    <ListPopup v-show="showPopup" @popupClose="closePopup" :type="0" @updateList="updateTable"/>
   </div>
 </template>
 
@@ -153,6 +153,9 @@ export default {
     },
     closePopup () {
       this.showPopup = false
+    },
+    updateTable () {
+      this.tableData = this.$store.state.userList
     }
   },
   computed: {
@@ -162,13 +165,8 @@ export default {
     }
   },
   mounted() {
-    this.axios.get("/api/user/list").then(response => {
-      console.log(response);
-      if (!response.data.code) {
-        alert(response.data.status);
-        return;
-      }
-      this.tableData = response.data.data
+    if (this.$store.state.userList.length) {
+      this.tableData = this.$store.state.userList
       if (this.tableData.length < 10) {
         // 若已不足10条记录，则全部展示
         this.showData = this.tableData
@@ -176,7 +174,24 @@ export default {
         // 若比10条记录多，则选前10条进行展示
         this.showData = this.tableData.slice(0, 10);
       }
-    })
+    } else {
+      this.axios.get("/api/user/list").then(response => {
+        console.log(response);
+        if (!response.data.code) {
+          alert(response.data.status);
+          return;
+        }
+        this.$store.state.userList = response.data.data
+        this.tableData = response.data.data
+        if (this.tableData.length < 10) {
+          // 若已不足10条记录，则全部展示
+          this.showData = this.tableData
+        } else {
+          // 若比10条记录多，则选前10条进行展示
+          this.showData = this.tableData.slice(0, 10);
+        }
+      })
+    }
   },
   components: {
     ListHeader,

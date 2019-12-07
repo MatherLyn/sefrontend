@@ -47,7 +47,6 @@
     },
     methods: {
       doLogin() {
-        console.log(this.userInfo)
         this.axios.post('/api/user/login', this.userInfo)
         .then(response => {
           const responseData = response.data
@@ -56,7 +55,6 @@
             return
           }
           this.msg = ''
-          console.log('登录成功')
           // 给提示，0.5秒后跳转到首页
           setTimeout(() => {
             this.$store.state.offline = false

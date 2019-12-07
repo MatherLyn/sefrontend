@@ -45,7 +45,9 @@ export default new Vuex.Store({
         name: '广东省广州市荔湾区荔湾路360号',
         sales: '125,125'
       }
-    ]
+    ],
+    userList: [],
+    productList: []
   }
   
 })

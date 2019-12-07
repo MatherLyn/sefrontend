@@ -107,12 +107,13 @@
   }
 
   .el-col {
-    width: 100%;
+    width: 100% !important;
     height: 100%;
     float: none;
   }
   
   .el-menu {
+    border-right-width: 0 !important;
     height: 100%;
     border: none;
     text-align: left;
@@ -179,7 +180,7 @@
 
   .el-pagination {
     text-align: right;
-    padding-top: 2rem;
+    padding-top: 2rem !important;
   }
 
   .el-table__body-wrapper {

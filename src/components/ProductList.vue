@@ -64,7 +64,7 @@
         :total="length"
       ></el-pagination>
     </div>
-    <ListPopup v-show="showPopup" @popupClose="closePopup" />
+    <ListPopup v-show="showPopup" @popupClose="closePopup" :type="1" @updateList="updateTable"/>
   </div>
 </template>
 
@@ -155,10 +155,8 @@
         this.workPiece.type = row.type
         this.workPiece.model = row.model
         this.workPiece.stock = parseInt(row.stock)
-        console.log(this.workPiece)
         this.axios.post('/api/workpiece/append', this.workPiece)
         .then(response => {
-          console.log(response)
         })
       },
       handleSizeChange (val) {
@@ -176,6 +174,10 @@
       },
       closePopup () {
         this.showPopup = false
+      },
+      updateTable () {
+        this.tableData = this.$store.state.productList
+        this.showData = this.tableData.slice(this.curPage - 1, this.curPage - 1 + this.curSize)
       }
     },
     computed: {
@@ -185,13 +187,8 @@
       }
     },
     mounted () {
-      this.axios.get('/api/workpiece/list')
-      .then(response => {
-        if (!response.data.code) {
-          alert(response.data.staus)
-          return
-        }
-        this.tableData = response.data.data
+      if (this.$store.state.productList.length) {
+        this.tableData = this.$store.state.productList
         if (this.tableData.length < 10) {
           // 若已不足10条记录，则全部展示
           this.showData = this.tableData
@@ -199,7 +196,24 @@
           // 若比10条记录多，则选前10条进行展示
           this.showData = this.tableData.slice(0, 10);
         }
-      })
+      } else {
+        this.axios.get('/api/workpiece/list')
+        .then(response => {
+          if (!response.data.code) {
+            alert(response.data.staus)
+            return
+          }
+          this.$store.state.productList = response.data.data
+          this.tableData = response.data.data
+          if (this.tableData.length < 10) {
+            // 若已不足10条记录，则全部展示
+            this.showData = this.tableData
+          } else {
+            // 若比10条记录多，则选前10条进行展示
+            this.showData = this.tableData.slice(0, 10);
+          }
+        })
+      }
     },
     components: {
       ListHeader,

@@ -19,7 +19,6 @@
   export default {
     mounted () {
       this.initChart()
-      console.log(this.color)
     },
     props: [
       'index',

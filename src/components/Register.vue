@@ -52,7 +52,6 @@ export default {
   },
   methods: {
     doRegister () {
-      console.log(this.userInfo)
       this.axios.post('/api/user/register', this.userInfo)
       .then(response => {
         const responseData = response.data
